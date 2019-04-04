@@ -7,6 +7,7 @@ export default function(state=[], action) {
             return [...state, action.payload]
         // case 2
         case FETCH_COMMENTS:
+        debugger
             const turkeyComments = action.payload.data.map(comment => comment.name)
             return [...state, ...turkeyComments] // adds comments to state here 
                 // in state, they are added as 'comments' (not turkeyComments)

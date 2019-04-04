@@ -14,6 +14,7 @@ class CommentList extends React.Component {
         return (
             <div>
                 <ul>
+                    <h4>Comment List</h4>
                     {this.renderComments()}
                 </ul>
             </div>
@@ -22,7 +23,7 @@ class CommentList extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-	console.log("TCL: mapStateToProps -> state", state)
+	// console.log("TCL: mapStateToProps -> state", state)
     return { comments: state.comments } // 'comments' = from /reducers/index.js (it names state obj)
 }
 

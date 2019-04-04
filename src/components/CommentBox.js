@@ -1,19 +1,22 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import * as actions from '../actions' // 'saveComment' = one of these
+import * as actions from '../actions' // 'saveComment', 'fetchComment' 
+import requireAuth from './requireAuth' // allows us to now wrap 'CommentBox' in HOC (see 'export' line)
 
 class CommentBox extends React.Component {
     state = { comment: '' }
-    
+
     handleChange = (event) => {
         this.setState({ comment: event.target.value })
     }
 
     handleSubmit = (event) => {
-        event.preventDefault() // prevents page from re-loading
-        this.setState({ comment: '' })
+        event.preventDefault() // runs 1ST! > prevents page from re-loading
+        this.setState({ comment: '' }) // setState = ASYNCHRONOUS!! runs AFTER 'saveComment'
+            // runs 3RD!
+        console.log(this.state.comment)
 
-        this.props.saveComment(this.state.comment)
+        this.props.saveComment(this.state.comment) // runs 2ND! 
     }
     
     render() {
@@ -33,4 +36,7 @@ class CommentBox extends React.Component {
     }
 }
 
-export default connect(null, actions)(CommentBox)
+// moved 'mapStateToProps()' to Higher Order Component (HOC = 'requireAuth.js')
+
+export default connect(null, actions)(requireAuth(CommentBox))
+    // before adding 'requireAuth()' > CAN view '/post' regardless of 'isLoggedIn' (this.props.auth)
